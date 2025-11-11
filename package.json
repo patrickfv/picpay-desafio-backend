@@ -1,0 +1,27 @@
+{
+  "name": "picpay-desafio-backend",
+  "version": "1.0.0",
+  "description": "Primeiramente, obrigado pelo seu interesse em trabalhar na melhor plataforma de pagamentos do mundo!\r Abaixo você encontrará todos as informações necessárias para iniciar o seu teste.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/index.ts",
+    "lint": "eslint 'src/**/*.ts'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.10.0",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0"
+  }
+}
