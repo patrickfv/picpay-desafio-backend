@@ -2,7 +2,7 @@
   "name": "picpay-desafio-backend",
   "version": "1.0.0",
   "description": "Primeiramente, obrigado pelo seu interesse em trabalhar na melhor plataforma de pagamentos do mundo!\r Abaixo você encontrará todos as informações necessárias para iniciar o seu teste.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
