@@ -2,40 +2,31 @@ import {DatabaseSync} from 'node:sqlite'
 
 const fileDB = new DatabaseSync('./database.db')
 
-const runTableUser = () => {
-    fileDB.exec(`DROP TABLE IF EXISTS users`)
-    fileDB.exec(`
-        CREATE TABLE users (
-            id INTEGER PRIMARY KEY,
-            name TEXT NOT NULL,
-            password TEXT NOT NULL,
-            email TEXT NOT NULL,
-            cpfCnpj TEXT NOT NULL,
-            userType INTEGER NOT NULL,
-            walletValue REAL NOT NULL
-        ) STRICT
-    `)
-}
 
-const runTableTransaction = () => {
-    fileDB.exec(`DROP TABLE IF EXISTS transactions`)
-    fileDB.exec(`
+fileDB.exec(`DROP TABLE IF EXISTS users`)
+fileDB.exec(`
+    CREATE TABLE users (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    password TEXT NOT NULL,
+    email TEXT NOT NULL,
+    cpfCnpj TEXT NOT NULL,
+    userType INTEGER NOT NULL,
+    walletValue REAL NOT NULL
+    ) STRICT
+`)
+
+fileDB.exec(`DROP TABLE IF EXISTS transactions`)
+fileDB.exec(`
         CREATE TABLE transactions (
-            id INTEGER PRIMARY KEY,
-            value REAL NOT NULL,
-            payee INTEGER NOT NULL,
-            payer INTEGER NOT NULL,
-            datetime INTEGER NOT NULL,
-            transactions 
-            FOREIGN KEY (payee) REFERENCES users (id),
-            FOREIGN KEY (payer) REFERENCES users (id)
-        ) STRICT
-    `)
-}
-const insertTransaction = fileDB.prepare(`
-        INSERT INTO transactions (id, value, payee, payer, datetime)
-        VALUES (@id, @value, @payee, @payer, @datetime)
-        RETURNING id, value, datetime
+        id INTEGER PRIMARY KEY,
+        value REAL NOT NULL,
+        payee INTEGER NOT NULL,
+        payer INTEGER NOT NULL,
+        datetime INTEGER NOT NULL,
+        FOREIGN KEY (payee) REFERENCES users (id),
+        FOREIGN KEY (payer) REFERENCES users (id)
+    ) STRICT
 `)
 
 const insertUser = fileDB.prepare(`
@@ -72,13 +63,16 @@ const generateUsers = () => {
     }
 }
 
+generateUsers()
+
+/*
+const insertTransaction = fileDB.prepare(`
+        INSERT INTO transactions (id, value, payee, payer, datetime)
+        VALUES (@id, @value, @payee, @payer, @datetime)
+        RETURNING id, value, datetime
+`)
 const generateTransation = () => {
     const transaction = { id: 10, value: 350.56, payee: 1, payer: 5, datetime: Date.now()}
     insertTransaction.run(transaction)
 }
-
-runTableTransaction()
-generateTransation()
-
-runTableUser()
-generateUsers()
+*/
