@@ -6,7 +6,7 @@ export type User = {
     password: string
     cpfCnpj: string
     userType: USER_TYPE
-    wallet: { value: number }
+    walletValue: number
 }
 
 export enum USER_TYPE {
@@ -15,7 +15,7 @@ export enum USER_TYPE {
 }
 
 export type Transaction = {
-    id: string
+    id: number
     value: number
     payee: User
     payer: User
