@@ -11,15 +11,15 @@ export class TransferService implements Transfer {
     exec = (payer: User, payee: User, value: number) => {
         if (payer.userType == USER_TYPE.shopkeeper) throw Error
 
-        payer.wallet.value -= value
-        payee.wallet.value += value
+        payer.walletValue -= value
+        payee.walletValue += value
 
         const transaction: TransactionModel = {
             datetime: this.timenow,
             payee,
             payer,
             value,
-            id: `${payer.id}-${payer.id}-${this.timenow}`
+            id: Math.floor(Math.random() * 100)
         }
         this.repository.save(transaction)
         return transaction
