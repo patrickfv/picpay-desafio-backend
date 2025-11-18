@@ -1,5 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import routers from './routers'
 
 dotenv.config()
 
@@ -14,8 +15,7 @@ export const config: Config = {
 }
 
 const app = express()
-
 app.use(express.json())
-app.get('/', (req, res) => { res.json({ status: 200 }) })
+app.use(routers)
 
 export default app
