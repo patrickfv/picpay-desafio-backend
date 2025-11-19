@@ -1,7 +1,8 @@
-import { Router } from 'express'
+import express, { Router } from 'express'
+import { transferController } from './controller/transfer-controller'
 
 const routers = Router()
 
-routers.get('/transfer', (req, res) => { res.json({ status: 200 })})
+routers.post('/transfer',transferController)
 
 export default routers
