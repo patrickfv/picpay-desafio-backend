@@ -3,10 +3,14 @@ import { TransferService, FindUserService } from '../../data/services'
 import { SQLiteTransactionRepository, SQLiteUserRepository } from '../../infra/repositories'
 import { getAuthorization } from '../service/authorization'
 
-export const transferController = async  (req: Request, res: Response) => {
-    const {payee, payer, value} = req.body
+export const transferController = async (req: Request, res: Response) => {
     const authorization = await getAuthorization()
-    if (!authorization) res.json({ value: 'Not Authorized' })
+    if (!authorization) {
+        res.json({ value: 'Not Authorized' })
+        return
+    }
+    
+    const {payee, payer, value} = req.body
 
     const transferService = new TransferService(new SQLiteTransactionRepository())
     const findUserService = new FindUserService(new SQLiteUserRepository())
