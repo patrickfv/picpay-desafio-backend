@@ -19,7 +19,7 @@ fileDB.exec(`
 fileDB.exec(`DROP TABLE IF EXISTS transactions`)
 fileDB.exec(`
         CREATE TABLE transactions (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         value REAL NOT NULL,
         payee INTEGER NOT NULL,
         payer INTEGER NOT NULL,

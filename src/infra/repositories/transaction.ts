@@ -7,15 +7,20 @@ export class SQLiteTransactionRepository implements TransactionRepository {
 
     save = (transaction: TransactionModel) => {
         const database = new DatabaseSync(this.pathdb)
-        const insert = database.prepare(`
-            INSERT INTO transactions (id, value, payee, payer, datetime)
-            VALUES (@id, @value, @payee, @payer, @datetime)
-            RETURNING id, value, datetime
-        `)
-        insert.run({
-            ...transaction,
-            payee: transaction.payee.id,
-            payer: transaction.payer.id
-        })
+        try {
+            const insert = database.prepare(`
+                INSERT INTO transactions (value, payee, payer, datetime)
+                VALUES (@value, @payee, @payer, @datetime)
+                RETURNING id, value, datetime
+            `)
+            insert.run({
+                datetime: transaction.datetime,
+                value: transaction.value,
+                payee: transaction.payee.id,
+                payer: transaction.payer.id
+            })
+        } catch(err) {
+            console.log(err)
+        }
     }
 }
