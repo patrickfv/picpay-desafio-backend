@@ -1,7 +1,8 @@
 import { Request, Response } from 'express'
-import { TransferService, FindUserService } from '../../data/services'
+import { TransferService, FindUserService, ErrorShopkeeper } from '../../data/services'
 import { SQLiteTransactionRepository, SQLiteUserRepository } from '../../infra/repositories'
 import { getAuthorization } from '../service/authorization'
+import { sendNotification } from '../service/notification'
 
 export const transferController = async (req: Request, res: Response) => {
     const authorization = await getAuthorization()
@@ -16,7 +17,8 @@ export const transferController = async (req: Request, res: Response) => {
     const findUserService = new FindUserService(new SQLiteUserRepository())
     const userpayee = findUserService.findById(payee)
     const userpayer = findUserService.findById(payer)
-    const transaction = transferService.exec(userpayer, userpayee, value)
+    const transaction = transferService.exec(userpayer, userpayee, value) // error
+    await sendNotification(transaction.payee)
 
     res.json({ value: transaction })
 }
